@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: development  
+    container_name: nextjs-dev
+    ports:
+      - "3000:3000"
+    restart: always
+
+  uat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: test  
+    container_name: nextjs-uat
+    ports:
+      - "3001:3000"
+    restart: always
+
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: production       
+    container_name: nextjs-prod
+    ports:
+      - "3002:3000"
+    restart: always
