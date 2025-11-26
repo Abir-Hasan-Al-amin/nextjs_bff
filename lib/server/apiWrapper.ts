@@ -14,3 +14,26 @@ export async function apiGet<T>(endpoint: string, config?: AxiosRequestConfig) {
     );
   }
 }
+
+export async function apiPost<TResponse, TBody>(
+  endpoint: string,
+  body: TBody,
+  config?: AxiosRequestConfig
+) {
+  try {
+    const response = await apiClient.post<TResponse>(endpoint, body, config);
+
+    return NextResponse.json({
+      data: response.data,
+    });
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return NextResponse.json(
+      {
+        error: err.message || "Failed to perform POST request",
+      },
+      { status: err.response?.status ?? 500 }
+    );
+  }
+}

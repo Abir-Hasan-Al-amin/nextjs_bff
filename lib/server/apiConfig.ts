@@ -8,9 +8,14 @@ export function extractConfig(req: NextRequest): AxiosRequestConfig {
   const forwardedUser = req.headers.get("x-user");
   if (forwardedUser) headers["X-Forwarded-User"] = forwardedUser;
 
+  const withCredentialsHeader = req.headers.get("x-with-credentials");
   const config: AxiosRequestConfig = {};
+
   if (Object.keys(params).length) config.params = params;
   if (Object.keys(headers).length) config.headers = headers;
+  if (withCredentialsHeader !== null) {
+    config.withCredentials = withCredentialsHeader === "true";
+  }
 
   return config;
 }

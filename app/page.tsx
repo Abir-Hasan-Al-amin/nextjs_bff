@@ -1,5 +1,9 @@
-export default function Home() {
+import Home from "@/components/home/Home";
+
+export default function page() {
   return (
-    <div className="flex justify-center items-center h-screen">Welcome</div>
+    <div className="flex justify-center items-center h-screen">
+      <Home />
+    </div>
   );
 }
