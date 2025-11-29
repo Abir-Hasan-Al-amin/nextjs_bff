@@ -1,16 +1,18 @@
 "use client";
 import { usePost } from "@/hooks/usePost";
 import { LoginRequest, LoginResponse } from "@/types/auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Login = () => {
+  const router = useRouter();
   const [form, setForm] = useState<LoginRequest>({
     email: "",
     password: "",
   });
 
   const { mutate: login, isPending } = usePost<LoginResponse, LoginRequest>(
-    "/api/auth/login",
+    "/auth/login",
     { headers: { "x-with-credentials": "false" } }
   );
 
@@ -22,8 +24,8 @@ const Login = () => {
     e.preventDefault();
 
     login(form, {
-      onSuccess: (data) => {
-        console.log("Login success:", data);
+      onSuccess: () => {
+        router.push("/");
       },
       onError: (err) => {
         console.error("Login failed:", err);

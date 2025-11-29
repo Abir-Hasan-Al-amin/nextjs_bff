@@ -11,7 +11,6 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // network
     if (!error.response) {
       return Promise.reject({ statusCode: 0, message: "Network error" });
     }
@@ -22,11 +21,14 @@ instance.interceptors.response.use(
     if (status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        await instance.get("/api/auth/refresh-token");
+        await instance.get("/auth/refresh-token");
         return instance(originalRequest);
       } catch (e) {
-        await axios.post("/api/auth/logout", null, { withCredentials: true });
-        return Promise.reject({ statusCode: 401, message: "Session expired" });
+        window.location.href = "/login";
+        return Promise.reject({
+          statusCode: 401,
+          message: "Session expired",
+        });
       }
     }
 

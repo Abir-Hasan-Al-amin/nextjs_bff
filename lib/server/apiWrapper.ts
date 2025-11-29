@@ -22,10 +22,7 @@ export async function apiPost<TResponse, TBody>(
 ) {
   try {
     const response = await apiClient.post<TResponse>(endpoint, body, config);
-
-    return NextResponse.json({
-      data: response.data,
-    });
+    return NextResponse.json(response.data);
   } catch (error) {
     const err = error as AxiosError;
 

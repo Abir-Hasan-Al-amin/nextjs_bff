@@ -1,13 +1,17 @@
-"use client"
+"use client";
+import { axiosInstance } from "@/helpers/axios/axiosInstance";
 import { usePost } from "@/hooks/usePost";
+import { useEffect } from "react";
 
 const Home = () => {
-  const {
-    mutate: logout,
-    isPending,
-    error,
-    isError,
-  } = usePost("/api/auth/logout");
+  const { mutate: logout, isPending, error, isError } = usePost("/auth/logout");
+
+  useEffect(() => {
+    axiosInstance
+      .post("/auth/refresh-token")
+      .then(() => console.log("Token refreshed"))
+      .catch((err) => console.log("Refresh failed:", err));
+  }, []);
 
   const handleLogout = () => {
     logout(undefined, {

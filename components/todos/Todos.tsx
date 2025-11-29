@@ -8,7 +8,7 @@ type Todo = {
 };
 
 export default function TodosPage() {
-  const { data, isLoading, isError } = useGet<Todo[]>("/api/todos", ["todos"]);
+  const { data, isLoading, isError } = useGet<Todo[]>("/todos", ["todos"]);
   if (isLoading) return <div>Loading todos...</div>;
   if (isError) return <div>Error loading todos!</div>;
 
