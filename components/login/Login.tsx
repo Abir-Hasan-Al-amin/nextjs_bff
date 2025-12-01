@@ -1,5 +1,5 @@
 "use client";
-import { usePost } from "@/hooks/usePost";
+import { usePost } from "@/hooks/useMutations";
 import { LoginRequest, LoginResponse } from "@/types/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,7 +13,7 @@ const Login = () => {
 
   const { mutate: login, isPending } = usePost<LoginResponse, LoginRequest>(
     "/auth/login",
-    { headers: { "x-with-credentials": "false" } }
+    { config: { headers: { "x-with-credentials": "false" } } }
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
